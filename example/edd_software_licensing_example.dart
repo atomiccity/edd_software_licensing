@@ -8,7 +8,7 @@ void main() async {
     itemId: 1,
     licenseKey: 'MYLICENSEKEY',
   );
-  if (activateResponse.isSuccessful()) {
+  if (activateResponse.isRequestSuccessful()) {
     // License was activated
   } else {
     // Figure out what went wrong
@@ -26,7 +26,7 @@ void main() async {
     itemId: 1,
     licenseKey: 'MYLICENSEKEY',
   );
-  if (checkResponse.isSuccessful()) {
+  if (checkResponse.isRequestSuccessful()) {
     // License is good
   } else {
     // Figure out what went wrong
@@ -44,7 +44,7 @@ void main() async {
     itemId: 1,
     licenseKey: 'MYLICENSEKEY',
   );
-  if (checkResponse.isSuccessful()) {
+  if (checkResponse.isRequestSuccessful()) {
     // License is deactivated
   } else {
     // Figure out what went wrong
@@ -59,7 +59,7 @@ void main() async {
 
   // Get latest version of software
   var versionResponse = await eddLicensingClient.getVersion(itemId: 1);
-  if (versionResponse.isSuccessful()) {
+  if (versionResponse.isRequestSuccessful()) {
     var newestVersion = versionResponse.newVersion;
     var stableVersion = versionResponse.stableVersion;
   }

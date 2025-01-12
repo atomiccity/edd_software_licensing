@@ -35,8 +35,12 @@ class EddSoftwareLicensingStatusResponse {
     this.error,
   });
 
-  bool isSuccessful() {
-    return (success != null) && (success == true);
+  bool isRequestSuccessful() {
+    return (serverResponseCode == 200);
+  }
+
+  bool isLicenseValid() {
+    return isRequestSuccessful() && success != null && success! && (license == 'valid');
   }
 
   String toJson() {
@@ -71,13 +75,13 @@ class EddSoftwareLicensingStatusResponse {
 
     return EddSoftwareLicensingStatusResponse(
       success: responseMap['success'],
-      serverResponseCode: serverResponseCode,
+      serverResponseCode: (serverResponseCode == null) ? responseMap['serverResponseCode'] : serverResponseCode,
       activationsLeft: responseMap['activations_left'],
       checksum: responseMap['checksum'],
       customerEmail: responseMap['customer_email'],
       customerName: responseMap['customer_name'],
       error: responseMap['error'],
-      expires: DateTime.tryParse(responseMap['expires']),
+      expires: (responseMap['expires'] != null) ? DateTime.tryParse(responseMap['expires']) : null,
       itemId: responseItemId,
       itemName: responseMap['item_name'],
       license: responseMap['license'],
@@ -120,8 +124,8 @@ class EddSoftwareLicensingVersionResponse {
     this.banners,
   });
 
-  bool isSuccessful() {
-    return (success != null) && (success == true);
+  bool isRequestSuccessful() {
+    return (serverResponseCode == 200);
   }
 
   String toJson() {
@@ -149,7 +153,7 @@ class EddSoftwareLicensingVersionResponse {
     var responseMap = json.decode(jsonString);
     return EddSoftwareLicensingVersionResponse(
       success: true,
-      serverResponseCode: serverResponseCode,
+      serverResponseCode: (serverResponseCode == null) ? responseMap['serverResponseCode'] : serverResponseCode,
       banners: responseMap['banners'],
       downloadLink: responseMap['download_link'],
       homepage: responseMap['homepage'],
