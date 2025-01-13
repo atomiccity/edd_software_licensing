@@ -2,6 +2,7 @@ name: edd_software_licensing
 description: A library for accessing Easy Digital Downloads software licensing API
 version: 0.9.0
 repository: https://github.com/atomiccity/edd_software_licensing
+issue_tracker: https://github.com/atomiccity/edd_software_licensing/issues
 
 environment:
   sdk: ^3.6.0
