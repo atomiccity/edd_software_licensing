@@ -8,11 +8,11 @@ void main() async {
     itemId: 1,
     licenseKey: 'MYLICENSEKEY',
   );
-  if (activateResponse.isRequestSuccessful()) {
+  if (activateResponse.isRequestSuccessful() && activateResponse.isLicenseValid()) {
     // License was activated
   } else {
     // Figure out what went wrong
-    if (activateResponse.serverResponseCode != 200) {
+    if (!activateResponse.isRequestSuccessful()) {
       // We got a HTTP server error
     } else {
       // We got a licensing error
@@ -26,11 +26,11 @@ void main() async {
     itemId: 1,
     licenseKey: 'MYLICENSEKEY',
   );
-  if (checkResponse.isRequestSuccessful()) {
+  if (activateResponse.isRequestSuccessful() && activateResponse.isLicenseValid()) {
     // License is good
   } else {
     // Figure out what went wrong
-    if (activateResponse.serverResponseCode != 200) {
+    if (!activateResponse.isRequestSuccessful()) {
       // We got a HTTP server error
     } else {
       // We got a licensing error
@@ -48,13 +48,6 @@ void main() async {
     // License is deactivated
   } else {
     // Figure out what went wrong
-    if (activateResponse.serverResponseCode != 200) {
-      // We got a HTTP server error
-    } else {
-      // We got a licensing error
-      var licenseStatus = activateResponse.license;
-      var errorMessage = activateResponse.error;
-    }
   }
 
   // Get latest version of software
