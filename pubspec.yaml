@@ -1,12 +1,11 @@
 name: edd_software_licensing
-description: A starting point for Dart libraries or applications.
+description: A library for accessing Easy Digital Downloads software licensing API
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/atomiccity/edd_software_licensing
 
 environment:
   sdk: ^3.6.0
 
-# Add regular dependencies here.
 dependencies:
   http: ^1.2.2
 
