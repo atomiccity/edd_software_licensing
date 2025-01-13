@@ -1,5 +1,14 @@
 import 'dart:convert';
 
+/// The response of a request to the EDD license API endpoints.
+///
+/// This is the response of a [activateLicense], [deactivateLicense], and
+/// [checkLicense] query.
+///
+/// When this response is received, the response
+/// validity should be checked by checking the [serverResponseCode] or calling
+/// [isRequestSuccessful] first. If the server didn't respond with a 200 HTTP
+/// status code, then the rest of the message should be ignored.
 class EddSoftwareLicensingStatusResponse {
   final bool? success;
   final int? serverResponseCode;
@@ -35,14 +44,23 @@ class EddSoftwareLicensingStatusResponse {
     this.error,
   });
 
+  /// A helper method to check that the web server replied with a 200 HTTP
+  /// status code.
   bool isRequestSuccessful() {
     return (serverResponseCode == 200);
   }
 
+  /// Check if the license is valid.
+  ///
+  /// For this to return true the following conditions must be met:
+  /// * serverResponseCode == 200
+  /// * success == true
+  /// * license == 'valid'
   bool isLicenseValid() {
     return isRequestSuccessful() && success != null && success! && (license == 'valid');
   }
 
+  /// Serialize this object to JSON
   String toJson() {
     return json.encode({
       if (license != null) 'license': license,
@@ -63,6 +81,12 @@ class EddSoftwareLicensingStatusResponse {
     });
   }
 
+  /// Create an [EddSoftwareLicensingStatusResponse] from a JSON representation.
+  ///
+  /// If [serverResponseCode] is passed in, its value will override the
+  /// corresponding value in [jsonString]. Passing in [serverResponseCode] is
+  /// helpful when deserializing from the web API call since that value won't
+  /// be present in the JSON.
   static EddSoftwareLicensingStatusResponse fromJson(
     String jsonString, {
     int? serverResponseCode,
@@ -93,6 +117,14 @@ class EddSoftwareLicensingStatusResponse {
   }
 }
 
+/// The response of a request to the EDD version API endpoints.
+///
+/// This is the response of a [getVersion] query.
+///
+/// When this response is received, the response
+/// validity should be checked by checking the [serverResponseCode] or calling
+/// [isRequestSuccessful] first. If the server didn't respond with a 200 HTTP
+/// status code, then the rest of the message should be ignored.
 class EddSoftwareLicensingVersionResponse {
   final bool? success;
   final int? serverResponseCode;
@@ -124,10 +156,13 @@ class EddSoftwareLicensingVersionResponse {
     this.banners,
   });
 
+  /// A helper method to check that the web server replied with a 200 HTTP
+  /// status code.
   bool isRequestSuccessful() {
     return (serverResponseCode == 200);
   }
 
+  /// Serialize this object to JSON
   String toJson() {
     return json.encode({
       if (newVersion != null) 'new_version': newVersion,
@@ -146,6 +181,12 @@ class EddSoftwareLicensingVersionResponse {
     });
   }
 
+  /// Create an [EddSoftwareLicensingVersionResponse] from a JSON representation.
+  ///
+  /// If [serverResponseCode] is passed in, its value will override the
+  /// corresponding value in [jsonString]. Passing in [serverResponseCode] is
+  /// helpful when deserializing from the web API call since that value won't
+  /// be present in the JSON.
   static EddSoftwareLicensingVersionResponse fromJson(
     String jsonString, {
     int? serverResponseCode,
